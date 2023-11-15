@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terraclim Beta Program</title>
+    <title>Note Bar Demo</title>
+
+    <!-- NOTEBAR CSS START-->
     <style>
         /* Import Inter font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
@@ -62,7 +64,7 @@
         .notebar-notification-content {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            font-weight: 500;
+            font-weight: 300;
             font-size: 16px;
             color: #3d3d3d;
         }
@@ -73,14 +75,44 @@
         }
 
         .notebar-bold-hl {
-            font-weight: 600;
+            font-weight: 500;
         }
     </style>
+    <!-- NOTEBAR CSS END-->
 </head>
 
 <body>
 
-    <div id="notebar-notification-bar">
+    <!-- NOTEBAR DEMO START (THIS CODE IS NOT NEEDED)-->
+    <div
+        style="border: none; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff; padding: 20px; max-width: 400px; margin: 20px auto; font-family: 'Inter', sans-serif; text-align: center;">
+
+        <h1 style="font-weight: 300; font-size: 20px; margin-bottom: 20px;">This is a demo of the notification
+            bar<br><br>When
+            it
+            is
+            closed, it will
+            only show again in 24 hours, even if you refresh the page</h1><br>
+        <button
+            style="background-color: #31C48D; color: #fff; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; cursor: pointer; border-radius: 5px; font-weight: 600; transition: background-color 0.3s ease;"
+            onclick="showNoteBarAgain()">Show Again</button>
+
+    </div>
+
+    <script>
+        function showNoteBarAgain() {
+            // Clear the timestamp to allow the note bar to show again
+            var specificDate = new Date(1970, 0, 1); // January is 0-based
+            localStorage.setItem('notebar-notificationClosedTime', specificDate.getTime());
+            document.getElementById('notebar-notification-bar').style.display = "flex";
+        }
+    </script>
+    <!-- NOTEBAR DEMO END (THIS CODE IS NOT NEEDED)-->
+
+
+
+    <!-- NOTEBAR ELEMENTS START-->
+    <div id="notebar-notification-bar" style="display:none;">
         <div id="notebar-notification-container">
             <p class="notebar-notification-content">Welcome to the <span class="notebar-bold-hl">TerraClim WebApp</span>
                 Beta! Need
@@ -92,7 +124,9 @@
         </div>
         <button id="notebar-close-button">Okay, got it!</button>
     </div>
+    <!-- NOTEBAR ELEMENTS END-->
 
+    <!-- NOTEBAR JS START-->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var notificationBar = document.getElementById('notebar-notification-bar');
@@ -100,8 +134,16 @@
 
             var notificationClosedTime = localStorage.getItem('notebar-notificationClosedTime');
 
-            // Check if 24 hours have passed since the notification was closed
-            if (!notificationClosedTime || (Date.now() - notificationClosedTime > 24 * 60 * 60 * 1000)) {
+            // Check if the notification was closed
+            if (notificationClosedTime) {
+                // Check if 24 hours have passed since the notification was closed
+                if (Date.now() - notificationClosedTime > 24 * 60 * 60 * 1000) {
+                    notificationBar.style.display = 'flex';
+                } else {
+                    notificationBar.style.display = 'none';
+                }
+            } else {
+                // If there is no initial timestamp, assume the notification has not been closed
                 notificationBar.style.display = 'flex';
             }
 
@@ -111,7 +153,9 @@
                 localStorage.setItem('notebar-notificationClosedTime', Date.now());
             });
         });
+
     </script>
+    <!-- NOTEBAR JS END-->
 
 </body>
 
