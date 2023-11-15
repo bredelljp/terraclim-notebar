@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terraclim Beta Program</title>
+    <style>
+        /* Import Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+        /* Style for the notification bar */
+        #notebar-notification-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0px -1px 5px rgba(15, 15, 15, 0.035);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Style for the container */
+        #notebar-notification-container {
+            max-width: 90%;
+            padding-left: 30px;
+        }
+
+        /* Style for the "OK, Got It" button */
+        #notebar-close-button {
+            background-color: #31C48D;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 9px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-right: 3vw;
+            transition: background-color 0.3s ease;
+            /* Add a smooth transition effect */
+        }
+
+        /* Hover effect for the button */
+        #notebar-close-button:hover {
+            background-color: #014737;
+            transform: scale(1.01);
+            /* Change to a slightly darker shade when hovered */
+        }
+
+        /* Style for the text content */
+        .notebar-notification-content {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #3d3d3d;
+        }
+
+        .notebar-greenlink {
+            text-decoration: none;
+            color: #31C48D;
+        }
+
+        .notebar-bold-hl {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="notebar-notification-bar">
+        <div id="notebar-notification-container">
+            <p class="notebar-notification-content">Welcome to the <span class="notebar-bold-hl">TerraClim WebApp</span>
+                Beta! Need
+                <span class="notebar-bold-hl">assistance</span> or have <span
+                    class="notebar-bold-hl">suggestions?</span>
+                Reach out to us at <a class="notebar-greenlink notebar-bold-hl"
+                    href="mailto:hello@terraclim.co.za">hello@terraclim.co.za</a>
+            </p>
+        </div>
+        <button id="notebar-close-button">Okay, got it!</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var notificationBar = document.getElementById('notebar-notification-bar');
+            var closeButton = document.getElementById('notebar-close-button');
+
+            var notificationClosedTime = localStorage.getItem('notebar-notificationClosedTime');
+
+            // Check if 24 hours have passed since the notification was closed
+            if (!notificationClosedTime || (Date.now() - notificationClosedTime > 24 * 60 * 60 * 1000)) {
+                notificationBar.style.display = 'flex';
+            }
+
+            closeButton.addEventListener('click', function () {
+                notificationBar.style.display = 'none';
+                // Save the current timestamp when the notification is closed
+                localStorage.setItem('notebar-notificationClosedTime', Date.now());
+            });
+        });
+    </script>
+
+</body>
+
+</html>
